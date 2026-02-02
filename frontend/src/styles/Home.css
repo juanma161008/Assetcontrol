@@ -1,0 +1,105 @@
+.home-container {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.banner-seguridad {
+  background: #fef3c7;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sedes-scroll {
+  display: flex;
+  gap: 20px;
+  justify-content: center; /* CENTRA las sedes */
+  flex-wrap: wrap; /* baja a la siguiente fila si no caben */
+  padding-bottom: 20px;
+}
+
+.sede-card {
+  flex: 0 0 600px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 600px;
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.cards-horizontal {
+  display: flex;
+  gap: 15px;
+  justify-content: center; /* CENTRA tarjetas dentro de sede */
+  margin-bottom: 15px;
+}
+
+.card {
+  flex: 1;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: #fff;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.proximos-mantenimientos ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center; /* CENTRA los items */
+}
+
+.proximos-mantenimientos li {
+  margin-bottom: 5px;
+}
+
+.graficas-horizontal {
+  display: flex;
+  gap: 15px;
+  justify-content: center; /* CENTRA gráficas */
+  margin-top: 15px;
+}
+
+.sede-card h2,
+.proximos-mantenimientos h4 {
+  color: #1e3a8a;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  justify-content: center;
+}
+
+.btn {
+  background: #1e3a8a;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.btn:hover {
+  background: #256d85;
+}
+@media (max-width: 768px) {
+  .contenedor,
+  .cards,
+  .grid {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
+}

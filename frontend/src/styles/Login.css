@@ -1,0 +1,96 @@
+/* CONTENEDOR GENERAL */
+.login-container {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* LOGOS ARRIBA */
+.login-logos {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-asset-login {
+  height: 300px;
+}
+
+.logo-m5-login {
+  height: 200px;
+}
+
+/* CENTRAR TARJETA */
+.login-card {
+  margin: auto;
+  background: #ff0f2f;
+  padding: 40px;
+  border-radius: 30px;
+  width: 350px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 👈 centra hijos */
+}
+
+.login-card h2 {
+  color: white;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.login-card input {
+  width: 85%;              /* 👈 no 100% */
+  padding: 15px;
+  margin: 0 auto 20px;     /* 👈 centra horizontalmente */
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  display: block;          /* 👈 asegura centrado */
+}
+
+.login-card button {
+  background: #0b2a6f;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* FOOTER PEGADO ABAJO */
+.login-footer {
+  background: #0b2a6f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+}
+
+/* FOOTER SECCIONES */
+.footer-left img {
+  height: 35px;
+}
+
+.footer-center {
+  font-size: 13px;
+}
+
+.footer-right i {
+  font-size: 18px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%;
+    padding: 25px;
+  }
+}

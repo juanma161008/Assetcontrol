@@ -1,0 +1,87 @@
+.container-activos {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.form-activo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.form-activo input,
+.form-activo select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.form-activo button {
+  grid-column: span 4;
+  padding: 0.6rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tabla-wrapper {
+  overflow-x: auto;
+}
+
+.tabla-activos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-activos th, .tabla-activos td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.tabla-activos th {
+  background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .contenedor,
+  .cards,
+  .grid {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .tabla-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .tabla-activos {
+    min-width: 900px;
+  }
+}
