@@ -2,12 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AssetControl</title>
+
+    <!-- Favicon: tu logo en pestaña del navegador -->
+    <link rel="icon" href="/src/assets/logo-assetcontrol.png" type="image/png" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Logo centrado antes de cargar React -->
+      <div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+        <img src="/src/assets/logo-assetcontrol.png" alt="AssetControl Logo" style="width:150px; height:auto;" />
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
