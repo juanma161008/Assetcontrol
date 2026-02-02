@@ -20,11 +20,12 @@
 }
 
 .sede-card {
-  flex: 0 0 600px;
+  flex: 1 1 600px;
   background: #f3f4f6;
   border-radius: 12px;
   padding: 20px;
-  min-width: 600px;
+  min-width: 300px;
+  max-width: 600px;
   scroll-snap-align: start;
   text-align: center;
 }
@@ -101,5 +102,34 @@
 
   .card {
     width: 100%;
+  }
+
+  .cards-horizontal,
+  .graficas-horizontal {
+    flex-direction: column;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 10px;
+  }
+
+  .banner-seguridad {
+    padding: 10px;
+  }
+
+  .sede-card {
+    padding: 15px;
+    min-width: 250px;
+  }
+
+  .card {
+    padding: 10px;
   }
 }

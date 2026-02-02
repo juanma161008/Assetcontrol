@@ -45,6 +45,20 @@ h1 {
   cursor: pointer;
 }
 
+@media (max-width: 480px) {
+  .container-mantenimiento {
+    padding: 1rem;
+  }
+
+  .form-mantenimiento {
+    grid-template-columns: 1fr;
+  }
+
+  .form-mantenimiento button {
+    grid-column: span 1;
+  }
+}
+
 .tabla-wrapper {
   overflow-x: auto;
 }

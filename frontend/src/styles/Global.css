@@ -83,6 +83,10 @@ html, body {
     overflow-x: hidden;
   }
 
+  .page {
+    padding: 20px;
+  }
+
   input,
   select,
   button {
@@ -106,6 +110,7 @@ html, body {
     flex-direction: column;
     text-align: center;
     gap: 15px;
+    padding: 15px;
   }
 
   .footer img {
@@ -116,5 +121,34 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 10px;
+  }
+
+  .header {
+    padding: 10px 15px;
+  }
+
+  .header nav a {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+
+  .footer {
+    padding: 10px;
+    height: auto;
+  }
+
+  .footer-logo {
+    height: 25px;
+  }
+
+  .footer-right i {
+    font-size: 16px;
+    margin-left: 10px;
   }
 }

@@ -45,6 +45,20 @@ h1 {
   cursor: pointer;
 }
 
+@media (max-width: 480px) {
+  .container-activos {
+    padding: 1rem;
+  }
+
+  .form-activo {
+    grid-template-columns: 1fr;
+  }
+
+  .form-activo button {
+    grid-column: span 1;
+  }
+}
+
 .tabla-wrapper {
   overflow-x: auto;
 }

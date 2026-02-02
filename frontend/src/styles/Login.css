@@ -93,4 +93,65 @@
     width: 90%;
     padding: 25px;
   }
+
+  .login-logos {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo-asset-login {
+    height: 200px;
+  }
+
+  .logo-m5-login {
+    height: 150px;
+  }
+
+  .login-footer {
+    padding: 10px 20px;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-logos {
+    margin-top: 20px;
+  }
+
+  .logo-asset-login {
+    height: 150px;
+  }
+
+  .logo-m5-login {
+    height: 100px;
+  }
+
+  .login-card {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .login-card h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .login-card input {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .login-card button {
+    padding: 10px;
+  }
+
+  .login-footer {
+    padding: 10px;
+  }
+
+  .footer-center {
+    font-size: 12px;
+  }
 }
