@@ -1,135 +1,109 @@
 .home-container {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* TITULO */
+.home-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+/* KPIS */
+.kpi-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.kpi-card {
+  flex: 1;
+  min-width: 220px;
+  background: #0f172a;
+  color: white;
   padding: 20px;
-  font-family: 'Segoe UI', sans-serif;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.banner-seguridad {
-  background: #fef3c7;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
+.kpi-card h3 {
+  font-size: 16px;
 }
 
-.sedes-scroll {
+.kpi-card span {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* VARIANTES */
+.kpi-card.success {
+  background: #1e7f5c;
+}
+
+.kpi-card.warning {
+  background: #d97706;
+}
+
+.kpi-card.danger {
+  background: #b91c1c;
+}
+
+/* SECCION INFERIOR */
+.home-bottom {
   display: flex;
   gap: 20px;
-  justify-content: center; /* CENTRA las sedes */
-  flex-wrap: wrap; /* baja a la siguiente fila si no caben */
-  padding-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.sede-card {
-  flex: 1 1 600px;
-  background: #f3f4f6;
+.home-box {
+  flex: 1;
+  min-width: 300px;
+  background: white;
   border-radius: 12px;
   padding: 20px;
-  min-width: 300px;
-  max-width: 600px;
-  scroll-snap-align: start;
-  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.cards-horizontal {
-  display: flex;
-  gap: 15px;
-  justify-content: center; /* CENTRA tarjetas dentro de sede */
+.home-box h2 {
+  color: #0f172a;
   margin-bottom: 15px;
 }
 
-.card {
-  flex: 1;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  color: #fff;
-}
-
-.card-hover:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.proximos-mantenimientos ul {
+.home-box ul {
   list-style: none;
-  padding-left: 0;
-  text-align: center; /* CENTRA los items */
-}
-
-.proximos-mantenimientos li {
-  margin-bottom: 5px;
-}
-
-.graficas-horizontal {
   display: flex;
-  gap: 15px;
-  justify-content: center; /* CENTRA gráficas */
-  margin-top: 15px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.sede-card h2,
-.proximos-mantenimientos h4 {
-  color: #1e3a8a;
+.home-box p {
+  line-height: 1.6;
 }
-
-.home-buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px;
-  justify-content: center;
+.kpi-card.info {
+  background: #2563eb;
 }
-
-.btn {
-  background: #1e3a8a;
-  color: #fff;
-  padding: 10px 20px;
+.home-welcome {
+  background: #f8f9fc;
+  border-left: 5px solid #4f46e5;
+  padding: 16px 20px;
+  margin-bottom: 24px;
   border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-.btn:hover {
-  background: #256d85;
-}
-@media (max-width: 768px) {
-  .contenedor,
-  .cards,
-  .grid {
-    flex-direction: column;
-  }
-
-  .card {
-    width: 100%;
-  }
-
-  .cards-horizontal,
-  .graficas-horizontal {
-    flex-direction: column;
-  }
-
-  .home-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
 }
 
-@media (max-width: 480px) {
-  .home-container {
-    padding: 10px;
-  }
+.home-welcome h1 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+}
 
-  .banner-seguridad {
-    padding: 10px;
-  }
-
-  .sede-card {
-    padding: 15px;
-    min-width: 250px;
-  }
-
-  .card {
-    padding: 10px;
-  }
+.home-welcome p {
+  margin: 0;
+  color: #444;
+  font-size: 14px;
 }

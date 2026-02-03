@@ -1,77 +1,66 @@
+/* CONTENEDOR */
 .container-mantenimiento {
-  max-width: 1200px;
+  max-width: 100%;
   margin: auto;
   padding: 2rem;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-h1 {
-  margin-bottom: 1.5rem;
-}
-
+/* BUSCADOR */
 .search-input {
   width: 100%;
   padding: 0.7rem;
-  margin-bottom: 1.5rem;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
+/* FORM FLEX */
 .form-mantenimiento {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 2rem;
 }
 
 .form-mantenimiento input,
 .form-mantenimiento select {
-  padding: 0.5rem;
+  flex: 1 1 220px;
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  text-align: center;
 }
 
 .form-mantenimiento button {
-  grid-column: span 3;
-  padding: 0.6rem;
+  flex: 1 1 220px;
+  padding: 10px;
   background: #4f46e5;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .container-mantenimiento {
-    padding: 1rem;
-  }
-
-  .form-mantenimiento {
-    grid-template-columns: 1fr;
-  }
-
-  .form-mantenimiento button {
-    grid-column: span 1;
-  }
-}
-
-.tabla-wrapper {
+/* ===== TABLA RESPONSIVE ===== */
+.tabla-container {
+  width: 100%;
   overflow-x: auto;
 }
 
 .tabla-mantenimiento {
   width: 100%;
+  min-width: 1400px;   /* 👈 muchas columnas */
   border-collapse: collapse;
 }
 
 .tabla-mantenimiento th,
 .tabla-mantenimiento td {
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  padding: 8px;
+  white-space: nowrap;
   text-align: center;
 }
 
@@ -79,25 +68,54 @@ h1 {
   background: #f0f0f0;
 }
 
+/* BOTONES */
+.tabla-mantenimiento button {
+  margin: 0 4px;
+  padding: 4px 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
-  .contenedor,
-  .cards,
-  .grid {
-    flex-direction: column;
+  .container-mantenimiento {
+    padding: 1rem;
   }
 
-  .card {
-    width: 100%;
+  .form-mantenimiento input,
+  .form-mantenimiento select,
+  .form-mantenimiento button {
+    flex: 1 1 100%;
   }
 }
-@media (max-width: 768px) {
-  .tabla-container {
-    overflow-x: auto;
-    width: 100%;
-  }
+.factura {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .tabla-mantenimiento {
-    min-width: 700px;
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: #fff;
+  width: 90%;
+  max-width: 900px;
+  padding: 20px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
   }
 }
 

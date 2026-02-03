@@ -1,76 +1,66 @@
+/* CONTENEDOR */
 .container-activos {
-  max-width: 1200px;
+  max-width: 100%;
   margin: auto;
   padding: 2rem;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-h1 {
-  margin-bottom: 1.5rem;
-}
-
+/* BUSCADOR */
 .search-input {
   width: 100%;
   padding: 0.7rem;
-  margin-bottom: 1.5rem;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
+/* FORMULARIO FLEX */
 .form-activo {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 2rem;
 }
 
 .form-activo input,
 .form-activo select {
-  padding: 0.5rem;
+  flex: 1 1 220px;   /* 👈 clave para responsive */
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  text-align: center;
 }
 
 .form-activo button {
-  grid-column: span 4;
-  padding: 0.6rem;
+  flex: 1 1 200px;
+  padding: 10px;
   background: #4f46e5;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .container-activos {
-    padding: 1rem;
-  }
-
-  .form-activo {
-    grid-template-columns: 1fr;
-  }
-
-  .form-activo button {
-    grid-column: span 1;
-  }
-}
-
-.tabla-wrapper {
-  overflow-x: auto;
+/* ===== TABLA RESPONSIVE ===== */
+.tabla-container {
+  width: 100%;
+  overflow-x: auto;       /* 👈 scroll horizontal */
 }
 
 .tabla-activos {
   width: 100%;
+  min-width: 1600px;      /* 👈 NO se rompe */
   border-collapse: collapse;
 }
 
-.tabla-activos th, .tabla-activos td {
+.tabla-activos th,
+.tabla-activos td {
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  padding: 8px;
+  white-space: nowrap;    /* 👈 evita que se rompa el texto */
   text-align: center;
 }
 
@@ -78,24 +68,127 @@ h1 {
   background: #f0f0f0;
 }
 
+/* BOTONES */
+.tabla-activos button {
+  margin: 0 4px;
+  padding: 4px 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
-  .contenedor,
-  .cards,
-  .grid {
+  .container-activos {
+    padding: 1rem;
+  }
+
+  .form-activo input,
+  .form-activo select,
+  .form-activo button {
+    flex: 1 1 100%;
+  }
+}
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-bottom: 1rem;
+  color: #4f46e5;
+}
+
+.modal-info p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.modal-actions button:hover {
+  background: #3730a3;
+}
+
+/* TABLA HISTÓRICO */
+.tabla-historico {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  min-width: 700px;
+}
+
+.tabla-historico th,
+.tabla-historico td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabla-historico th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.tabla-historico tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.tabla-historico tbody tr:hover {
+  background: #e0e0ff;
+}
+
+/* SCROLL HORIZONTAL PARA TABLA HISTÓRICO */
+.modal-box .tabla-historico {
+  overflow-x: auto;
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .modal-box {
+    padding: 1rem;
+  }
+
+  .modal-actions {
     flex-direction: column;
   }
 
-  .card {
-    width: 100%;
-  }
-}
-@media (max-width: 768px) {
-  .tabla-container {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  .tabla-activos {
-    min-width: 900px;
+  .tabla-historico {
+    min-width: 100%;
   }
 }

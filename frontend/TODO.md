@@ -1,8 +1,10 @@
-# TODO: Hacer la app responsiva
+# TODO: Hacer la app 100% responsiva con detección de dispositivo
 
-- [x] Actualizar Global.css: Agregar media queries para pantallas pequeñas (480px), ajustar padding y tamaños de fuente.
-- [x] Actualizar Home.css: Hacer .sede-card responsiva, ajustar flex layouts para móviles.
-- [x] Actualizar Login.css: Mejorar responsividad para pantallas muy pequeñas.
-- [x] Actualizar activos.css: Asegurar que los formularios y tablas sean responsivos.
-- [x] Actualizar Mantenimiento.css: Similar a activos.css.
-- [x] Probar la app en diferentes tamaños de pantalla.
+- [x] Crear utilidad de detección de dispositivo (deviceDetect.js y useDeviceDetect.js)
+- [x] Integrar detección de dispositivo en App.jsx
+- [x] Actualizar Global.css: Reemplazar media queries con clases de dispositivo (.is-mobile, .is-tablet, .is-desktop)
+- [x] Actualizar Home.css: Usar clases de dispositivo para estilos específicos
+- [x] Actualizar Login.css: Usar clases de dispositivo para estilos específicos
+- [x] Actualizar activos.css: Usar clases de dispositivo para estilos específicos
+- [x] Actualizar Mantenimiento.css: Usar clases de dispositivo para estilos específicos
+- [ ] Probar la app en diferentes dispositivos (PC, tablet, móvil)

@@ -1,0 +1,184 @@
+/* =============================
+   CONTENEDOR PRINCIPAL
+============================= */
+.factura {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+  background: white;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+/* =============================
+   HEADER
+============================= */
+.factura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 12px;
+}
+
+.empresa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 90px;
+  height: auto;
+}
+
+.empresa-datos h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.empresa-datos p {
+  margin: 2px 0;
+  font-size: 11px;
+}
+
+.factura-info {
+  text-align: right;
+  font-size: 12px;
+}
+
+/* =============================
+   TÍTULO
+============================= */
+.factura-titulo {
+  text-align: center;
+  margin: 16px 0;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+/* =============================
+   BLOQUES GENERALES
+============================= */
+.bloque {
+  border: 1px solid #000;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.bloque h3 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* =============================
+   GRID FLEX
+============================= */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.grid p {
+  width: 48%;
+  margin: 0;
+}
+
+/* =============================
+   CAMPOS EDITABLES
+============================= */
+.campo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 48%;
+}
+
+.campo label {
+  font-weight: bold;
+  min-width: 70px;
+  font-size: 12px;
+}
+
+.campo input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #000;
+  font-size: 12px;
+  padding: 2px;
+  background: transparent;
+}
+
+/* =============================
+   CHECKBOXES
+============================= */
+.checkboxes {
+  display: flex;
+  gap: 24px;
+  margin-top: 6px;
+}
+
+.checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+/* =============================
+   TEXTAREA
+============================= */
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #000;
+  padding: 6px;
+  font-size: 12px;
+  resize: none;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+/* =============================
+   PÁGINA / IMPRESIÓN
+============================= */
+@page {
+  size: A4;
+  margin: 15mm;
+}
+
+@media print {
+  body {
+    background: white;
+    margin: 0;
+  }
+
+  input,
+  textarea {
+    border: none;
+    outline: none;
+  }
+
+  .factura {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    page-break-inside: avoid;
+  }
+
+  .bloque {
+    page-break-inside: avoid;
+  }
+
+  .factura-header {
+    page-break-inside: avoid;
+  }
+}

@@ -1,131 +1,157 @@
 import React, { useState, useEffect } from "react";
-import Footer from "../components/Footer";
-import "../styles/Mantenimiento.css";
+import { useNavigate } from "react-router-dom";
+import "../styles/mantenimiento.css";
 
 export default function Mantenimiento() {
-  const [mantenimientos, setMantenimientos] = useState(() => {
-    return JSON.parse(localStorage.getItem("mantenimientos")) || [];
-  });
+  const navigate = useNavigate();
+
+  const [mantenimientos, setMantenimientos] = useState(
+    () => JSON.parse(localStorage.getItem("mantenimientos")) || []
+  );
+
+  const [activos] = useState(
+    () => JSON.parse(localStorage.getItem("activos")) || []
+  );
+
+  const [buscar, setBuscar] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
   const [form, setForm] = useState({
     fecha: "",
     activo: "",
-    descripcion: "",
-    responsable: "",
-    observaciones: "",
     tipo: "",
-    usuario: "",
+    tecnico: "",
+    descripcion: "",
   });
-
-  const [editIndex, setEditIndex] = useState(null);
-  const [searchActivo, setSearchActivo] = useState("");
-
-  const tipos = ["Preventivo", "Correctivo"];
 
   useEffect(() => {
     localStorage.setItem("mantenimientos", JSON.stringify(mantenimientos));
   }, [mantenimientos]);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const generarConsecutivo = () => {
+    const last = Number(localStorage.getItem("facturaConsecutivo") || 4000);
+    const next = last + 1;
+    localStorage.setItem("facturaConsecutivo", next);
+    return next;
   };
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editIndex === null) {
-      setMantenimientos([...mantenimientos, form]);
-    } else {
-      const nuevos = [...mantenimientos];
-      nuevos[editIndex] = form;
-      setMantenimientos(nuevos);
+
+    if (editIndex !== null) {
+      const copia = [...mantenimientos];
+      copia[editIndex] = { ...copia[editIndex], ...form };
+      setMantenimientos(copia);
       setEditIndex(null);
+    } else {
+      setMantenimientos([
+        ...mantenimientos,
+        { ...form, factura: generarConsecutivo() },
+      ]);
     }
+
     setForm({
       fecha: "",
       activo: "",
-      descripcion: "",
-      responsable: "",
-      observaciones: "",
       tipo: "",
-      usuario: "",
+      tecnico: "",
+      descripcion: "",
     });
   };
 
-  const handleEdit = (index) => {
-    setForm(mantenimientos[index]);
-    setEditIndex(index);
+  const handleEdit = (i) => {
+    setForm(mantenimientos[i]);
+    setEditIndex(i);
   };
 
-  const handleDelete = (index) => {
-    if (window.confirm("¿Eliminar este mantenimiento?")) {
-      setMantenimientos(mantenimientos.filter((_, i) => i !== index));
+  const handleDelete = (i) => {
+    if (window.confirm("¿Eliminar mantenimiento?")) {
+      setMantenimientos(mantenimientos.filter((_, idx) => idx !== i));
     }
   };
 
-  const historicoFiltrado = mantenimientos.filter((m) =>
-    m.activo.toLowerCase().includes(searchActivo.toLowerCase())
+  const filtrados = mantenimientos.filter(
+    (m) =>
+      m.activo.toLowerCase().includes(buscar.toLowerCase()) ||
+      m.tecnico.toLowerCase().includes(buscar.toLowerCase()) ||
+      m.factura.toString().includes(buscar)
   );
 
   return (
     <div className="container-mantenimiento">
-      <h1>🛠️ Mantenimiento de Activos</h1>
+      <h1>🛠️ Mantenimientos</h1>
 
       <input
-        type="text"
-        placeholder="Buscar por activo..."
-        value={searchActivo}
-        onChange={(e) => setSearchActivo(e.target.value)}
-        className="search-input"
+        placeholder="🔍 Buscar por activo, técnico o factura"
+        value={buscar}
+        onChange={(e) => setBuscar(e.target.value)}
       />
 
-      <form onSubmit={handleSubmit} className="form-mantenimiento">
+      <form className="form-mantenimiento" onSubmit={handleSubmit}>
         <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
-        <input type="text" name="activo" value={form.activo} onChange={handleChange} placeholder="ACTIVO" required />
-        <input type="text" name="descripcion" value={form.descripcion} onChange={handleChange} placeholder="DESCRIPCIÓN" />
-        <input type="text" name="responsable" value={form.responsable} onChange={handleChange} placeholder="RESPONSABLE" />
-        <input type="text" name="observaciones" value={form.observaciones} onChange={handleChange} placeholder="OBSERVACIONES" />
 
-        <select name="tipo" value={form.tipo} onChange={handleChange}>
-          <option value="">TIPO DE MANTENIMIENTO</option>
-          {tipos.map((t) => (
-            <option key={t} value={t}>{t}</option>
+        <select name="activo" value={form.activo} onChange={handleChange} required>
+          <option value="">Seleccione activo</option>
+          {activos.map((a, i) => (
+            <option key={i} value={a.activo}>{a.activo}</option>
           ))}
         </select>
 
-        <input type="text" name="usuario" value={form.usuario} onChange={handleChange} placeholder="USUARIO QUE REGISTRÓ" />
+        <select name="tipo" value={form.tipo} onChange={handleChange} required>
+          <option value="">Tipo</option>
+          <option>Preventivo</option>
+          <option>Correctivo</option>
+        </select>
 
-        <button type="submit">
-          {editIndex === null ? "Agregar Mantenimiento" : "Guardar Cambios"}
-        </button>
+        <input name="tecnico" value={form.tecnico} onChange={handleChange} placeholder="Técnico" required />
+        <input name="descripcion" value={form.descripcion} onChange={handleChange} placeholder="Observaciones" />
+
+        <button>{editIndex !== null ? "Actualizar" : "Agregar"}</button>
       </form>
 
-      {/* TABLA RESPONSIVE */}
-      <div className="tabla-container">
-        <table className="tabla-mantenimiento">
-          <thead>
-            <tr>
-              {Object.keys(form).map((key) => (
-                <th key={key}>{key.toUpperCase()}</th>
-              ))}
-              <th>ACCIONES</th>
+      <table className="tabla-mantenimiento">
+        <thead>
+          <tr>
+            <th>Factura</th>
+            <th>Activo</th>
+            <th>Tipo</th>
+            <th>Técnico</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtrados.map((m, i) => (
+            <tr key={i}>
+              <td>{m.factura}</td>
+              <td>{m.activo}</td>
+              <td>{m.tipo}</td>
+              <td>{m.tecnico}</td>
+              <td>
+                <button onClick={() => handleEdit(i)}>✏️</button>
+                <button onClick={() => handleDelete(i)}>🗑️</button>
+                <button
+                  onClick={() => {
+                    localStorage.setItem(
+                      "activoFactura",
+                      JSON.stringify(activos.find(a => a.activo === m.activo))
+                    );
+                    localStorage.setItem(
+                      "mantenimientoFactura",
+                      JSON.stringify(m)
+                    );
+                    navigate(`/factura/${m.factura}`);
+                  }}
+                >
+                  🧾
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {historicoFiltrado.map((m, i) => (
-              <tr key={i}>
-                {Object.keys(form).map((key) => (
-                  <td key={key}>{m[key]}</td>
-                ))}
-                <td>
-                  <button onClick={() => handleEdit(i)}>✏️</button>
-                  <button onClick={() => handleDelete(i)}>🗑️</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
