@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/activos.css";
-import generarMantenimientoPDF from "../components/MantenimientoPDF";
+import generarMantenimientoPDF from "../components/mantenimientopdf";
 
 export default function Activos() {
   const [activos, setActivos] = useState(() =>
