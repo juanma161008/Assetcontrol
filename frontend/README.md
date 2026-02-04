@@ -17,7 +17,7 @@ El backend se encarga de la conexión a MySQL (XAMPP). Asegúrate de:
 Puedes definir la URL del backend con:
 
 ```
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=http://10.1.9.160:5000
 ```
 
 Si no se define, el frontend usa ese valor por defecto.

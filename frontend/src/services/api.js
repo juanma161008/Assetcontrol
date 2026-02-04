@@ -1,4 +1,4 @@
-const DEFAULT_API_URL = "http://localhost:5000";
+const DEFAULT_API_URL = "http://10.1.9.160:5000";
 
 const API_URL = import.meta.env.VITE_API_URL || DEFAULT_API_URL;
 
