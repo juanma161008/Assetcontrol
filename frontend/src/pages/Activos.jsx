@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/activos.css";
-import generarMantenimientoPDF from "../components/mantenimientopdf";
+import generarMantenimientoPDF from "../components/MantenimientoPDF";
 import { api } from "../services/api";
 
 export default function Activos() {

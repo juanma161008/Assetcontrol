@@ -16,7 +16,12 @@ export default function Login() {
     setError("");
     setLoading(true);
     try {
-      const response = await api.login(form);
+      const usuario = form.usuario.trim();
+      const response = await api.login({
+        usuario,
+        email: usuario,
+        password: form.password,
+      });
       localStorage.setItem("usuario", JSON.stringify(response));
       navigate("/home");
     } catch (err) {
@@ -47,7 +52,7 @@ export default function Login() {
         <input
           type="text"
           name="usuario"
-          placeholder="Usuario"
+          placeholder="Usuario o correo"
           value={form.usuario}
           onChange={handleChange}
           required

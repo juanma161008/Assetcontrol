@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/mantenimiento.css";
+import "../styles/Mantenimiento.css";
 import { api } from "../services/api";
 
 export default function Mantenimiento() {
