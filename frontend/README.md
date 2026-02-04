@@ -1,16 +1,34 @@
-# React + Vite
+# AssetControl Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Requisitos
+- Node.js 18+
+- Backend Flask disponible (ver `assetcontrol_back`).
 
-Currently, two official plugins are available:
+## Backend Flask + MySQL (XAMPP)
+Este frontend consume el API del backend Flask ubicado en:  
+https://github.com/juanma161008/assetcontrol_back.git
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El backend se encarga de la conexión a MySQL (XAMPP). Asegúrate de:
+1. Tener MySQL corriendo en XAMPP con la base `assetcontrol`.
+2. Crear el usuario/credenciales indicadas en el backend Flask.
+3. Levantar el backend en `http://localhost:5000`.
 
-## React Compiler
+## Variables de entorno
+Puedes definir la URL del backend con:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+VITE_API_URL=http://10.1.9.160:5000
+```
 
-## Expanding the ESLint configuration
+Si no se define, el frontend usa ese valor por defecto.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Scripts
+```
+npm install
+npm run dev
+```
+
+## Notas
+- Las rutas del API usadas por el frontend son `/login`, `/activos` y `/mantenimientos`.
+- Para el login, el frontend envía el identificador como `usuario` y `email` (mismo valor) para compatibilidad con backends que validan por usuario o correo y usan `password_hash` para verificación segura.
+- Para producción configura el backend con el host/puerto deseado y actualiza `VITE_API_URL`.

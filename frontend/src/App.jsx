@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
+import Login from "./pages/login";
+import Home from "./pages/home";
 import Activos from "./pages/Activos";
 import Mantenimiento from "./pages/Mantenimiento";
 import Factura from "./pages/factura";   
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import "./styles/global.css";
+import "./styles/Global.css";
 
 function Layout({ children }) {
   return (

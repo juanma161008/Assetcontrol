@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/mantenimiento.css";
+import "../styles/Mantenimiento.css";
+import { api } from "../services/api";
 
 export default function Mantenimiento() {
   const navigate = useNavigate();
 
-  const [mantenimientos, setMantenimientos] = useState(
-    () => JSON.parse(localStorage.getItem("mantenimientos")) || []
-  );
-
-  const [activos] = useState(
-    () => JSON.parse(localStorage.getItem("activos")) || []
-  );
+  const [mantenimientos, setMantenimientos] = useState([]);
+  const [activos, setActivos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [buscar, setBuscar] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   const [form, setForm] = useState({
     fecha: "",
@@ -25,32 +23,49 @@ export default function Mantenimiento() {
   });
 
   useEffect(() => {
-    localStorage.setItem("mantenimientos", JSON.stringify(mantenimientos));
-  }, [mantenimientos]);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const [mantenimientosData, activosData] = await Promise.all([
+          api.getMantenimientos(),
+          api.getActivos(),
+        ]);
+        setMantenimientos(mantenimientosData);
+        setActivos(activosData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const generarConsecutivo = () => {
-    const last = Number(localStorage.getItem("facturaConsecutivo") || 4000);
-    const next = last + 1;
-    localStorage.setItem("facturaConsecutivo", next);
-    return next;
-  };
+    fetchData();
+  }, []);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editIndex !== null) {
-      const copia = [...mantenimientos];
-      copia[editIndex] = { ...copia[editIndex], ...form };
-      setMantenimientos(copia);
-      setEditIndex(null);
-    } else {
-      setMantenimientos([
-        ...mantenimientos,
-        { ...form, factura: generarConsecutivo() },
-      ]);
+    try {
+      setError("");
+      if (editId !== null) {
+        await api.updateMantenimiento(editId, form);
+        setMantenimientos((prev) =>
+          prev.map((item) =>
+            item.id === editId ? { ...item, ...form } : item
+          )
+        );
+        setEditId(null);
+      } else {
+        await api.createMantenimiento(form);
+        const updated = await api.getMantenimientos();
+        setMantenimientos(updated);
+      }
+    } catch (err) {
+      setError(err.message);
     }
 
     setForm({
@@ -62,27 +77,48 @@ export default function Mantenimiento() {
     });
   };
 
-  const handleEdit = (i) => {
-    setForm(mantenimientos[i]);
-    setEditIndex(i);
+  const handleEdit = (mantenimiento) => {
+    setForm({
+      fecha: mantenimiento.fecha || "",
+      activo: mantenimiento.activo || "",
+      tipo: mantenimiento.tipo || "",
+      tecnico: mantenimiento.tecnico || "",
+      descripcion: mantenimiento.descripcion || "",
+    });
+    setEditId(mantenimiento.id);
   };
 
-  const handleDelete = (i) => {
+  const handleDelete = async (mantenimiento) => {
     if (window.confirm("¿Eliminar mantenimiento?")) {
-      setMantenimientos(mantenimientos.filter((_, idx) => idx !== i));
+      try {
+        setError("");
+        await api.deleteMantenimiento(mantenimiento.id);
+        setMantenimientos((prev) =>
+          prev.filter((item) => item.id !== mantenimiento.id)
+        );
+      } catch (err) {
+        setError(err.message);
+      }
     }
   };
 
   const filtrados = mantenimientos.filter(
     (m) =>
-      m.activo.toLowerCase().includes(buscar.toLowerCase()) ||
-      m.tecnico.toLowerCase().includes(buscar.toLowerCase()) ||
-      m.factura.toString().includes(buscar)
+      String(m.activo ?? "")
+        .toLowerCase()
+        .includes(buscar.toLowerCase()) ||
+      String(m.tecnico ?? "")
+        .toLowerCase()
+        .includes(buscar.toLowerCase()) ||
+      String(m.factura).includes(buscar)
   );
 
   return (
     <div className="container-mantenimiento">
       <h1>🛠️ Mantenimientos</h1>
+
+      {loading && <p>Cargando mantenimientos...</p>}
+      {error && <p className="error">{error}</p>}
 
       <input
         placeholder="🔍 Buscar por activo, técnico o factura"
@@ -109,7 +145,7 @@ export default function Mantenimiento() {
         <input name="tecnico" value={form.tecnico} onChange={handleChange} placeholder="Técnico" required />
         <input name="descripcion" value={form.descripcion} onChange={handleChange} placeholder="Observaciones" />
 
-        <button>{editIndex !== null ? "Actualizar" : "Agregar"}</button>
+        <button>{editId !== null ? "Actualizar" : "Agregar"}</button>
       </form>
 
       <table className="tabla-mantenimiento">
@@ -124,14 +160,14 @@ export default function Mantenimiento() {
         </thead>
         <tbody>
           {filtrados.map((m, i) => (
-            <tr key={i}>
+            <tr key={m.id ?? i}>
               <td>{m.factura}</td>
               <td>{m.activo}</td>
               <td>{m.tipo}</td>
               <td>{m.tecnico}</td>
               <td>
-                <button onClick={() => handleEdit(i)}>✏️</button>
-                <button onClick={() => handleDelete(i)}>🗑️</button>
+                <button onClick={() => handleEdit(m)}>✏️</button>
+                <button onClick={() => handleDelete(m)}>🗑️</button>
                 <button
                   onClick={() => {
                     localStorage.setItem(

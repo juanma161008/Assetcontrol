@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FacturaMantenimiento from "../components/FacturaMantenimiento";
 import generarFacturaPDF from "../components/FacturaPDF";
-import "../styles/factura.css";
+import "../styles/Factura.css";
 
 export default function Factura() {
   const [activo, setActivo] = useState(null);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "../assets/logom5.png";
-import "../styles/factura.css";
+import "../styles/Factura.css";
 
 export default function FacturaMantenimiento({ activo, mantenimiento }) {
   const storageKey = `factura_${mantenimiento.factura}`;

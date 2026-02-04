@@ -1,15 +1,39 @@
 import "../styles/Login.css";
 import logoAsset from "../assets/logo-assetcontrol.png";
 import logoM5 from "../assets/logom5.png";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../services/api";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [form, setForm] = useState({ usuario: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // login simple (temporal)
-    navigate("/home");
+    setError("");
+    setLoading(true);
+    try {
+      const usuario = form.usuario.trim();
+      const response = await api.login({
+        usuario,
+        email: usuario,
+        password: form.password,
+      });
+      localStorage.setItem("usuario", JSON.stringify(response));
+      navigate("/home");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -25,10 +49,28 @@ export default function Login() {
       <form className="login-card" onSubmit={handleLogin}>
         <h2>Iniciar Sesión</h2>
 
-        <input type="text" placeholder="Usuario" required />
-        <input type="password" placeholder="Contraseña" required />
+        <input
+          type="text"
+          name="usuario"
+          placeholder="Usuario o correo"
+          value={form.usuario}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
 
-        <button type="submit">Ingresar</button>
+        {error && <p className="login-error">{error}</p>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Validando..." : "Ingresar"}
+        </button>
       </form>
 
       {/* FOOTER */}
