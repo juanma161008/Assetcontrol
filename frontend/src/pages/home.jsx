@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/Home.css";
+import { api } from "../services/api";
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -10,33 +11,45 @@ export default function Home() {
     mantenimientosActivos: 0,
     mantenimientosTotal: 0,
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const activos = JSON.parse(localStorage.getItem("activos")) || [];
-    let mantenimientos = JSON.parse(localStorage.getItem("mantenimientos")) || [];
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const [activos, mantenimientos] = await Promise.all([
+          api.getActivos(),
+          api.getMantenimientos(),
+        ]);
 
-    // 🔧 Normalización registros antiguos
-    mantenimientos = mantenimientos.map(m => ({
-      ...m,
-      estado: m.estado || "En proceso",
-    }));
+        const disponibles = activos.filter(
+          (a) => a.estado === "Disponible"
+        ).length;
+        const mantenimiento = activos.filter(
+          (a) => a.estado === "Mantenimiento"
+        ).length;
+        const fueraServicio = activos.filter(
+          (a) => a.estado === "Fuera de servicio"
+        ).length;
 
-    const disponibles = activos.filter(a => a.estado === "Disponible").length;
-    const mantenimiento = activos.filter(a => a.estado === "Mantenimiento").length;
-    const fueraServicio = activos.filter(a => a.estado === "Fuera de servicio").length;
+        setStats({
+          total: activos.length,
+          disponibles,
+          mantenimiento,
+          fueraServicio,
+          mantenimientosActivos: mantenimientos.length,
+          mantenimientosTotal: mantenimientos.length,
+        });
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const mantenimientosActivos = mantenimientos.filter(
-      m => m.estado === "En proceso"
-    ).length;
-
-    setStats({
-      total: activos.length,
-      disponibles,
-      mantenimiento,
-      fueraServicio,
-      mantenimientosActivos,
-      mantenimientosTotal: mantenimientos.length,
-    });
+    fetchStats();
   }, []);
 
   return (
@@ -56,6 +69,9 @@ export default function Home() {
 
       {/* ===== DASHBOARD ===== */}
       <h2 className="home-title">📊 Dashboard de Activos</h2>
+
+      {loading && <p>Cargando indicadores...</p>}
+      {error && <p className="error">{error}</p>}
 
       <div className="kpi-container">
 

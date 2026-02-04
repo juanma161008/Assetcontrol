@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../styles/activos.css";
 import generarMantenimientoPDF from "../components/mantenimientopdf";
+import { api } from "../services/api";
 
 export default function Activos() {
-  const [activos, setActivos] = useState(() =>
-    JSON.parse(localStorage.getItem("activos")) || []
-  );
-  const [mantenimientos] = useState(() =>
-    JSON.parse(localStorage.getItem("mantenimientos")) || []
-  );
+  const [activos, setActivos] = useState([]);
+  const [mantenimientos, setMantenimientos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     sede: "",
@@ -22,14 +21,12 @@ export default function Activos() {
     modelo: "",
     procesador: "",
     ram: "",
-    tipo: "",
     hdd: "",
-    tipoHdd: "",
     os: "",
     estado: "Disponible",
   });
 
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [search, setSearch] = useState("");
   const [activoSeleccionado, setActivoSeleccionado] = useState(null);
   const [verModal, setVerModal] = useState(false);
@@ -42,21 +39,51 @@ export default function Activos() {
   const estados = ["Disponible", "Mantenimiento", "Fuera de servicio"];
 
   useEffect(() => {
-    localStorage.setItem("activos", JSON.stringify(activos));
-  }, [activos]);
+    const fetchData = async () => {
+      try {
+        setError("");
+        setLoading(true);
+        const [activosData, mantenimientosData] = await Promise.all([
+          api.getActivos(),
+          api.getMantenimientos(),
+        ]);
+        setActivos(activosData);
+        setMantenimientos(mantenimientosData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editIndex === null) {
-      setActivos([...activos, form]);
-    } else {
-      const nuevos = [...activos];
-      nuevos[editIndex] = form;
-      setActivos(nuevos);
-      setEditIndex(null);
+    try {
+      setError("");
+      if (editId === null) {
+        const response = await api.createActivo(form);
+        setActivos((prev) => [
+          ...prev,
+          { ...form, id: response.id },
+        ]);
+      } else {
+        await api.updateActivo(editId, form);
+        setActivos((prev) =>
+          prev.map((item) =>
+            item.id === editId ? { ...item, ...form } : item
+          )
+        );
+        setEditId(null);
+      }
+    } catch (err) {
+      setError(err.message);
     }
+
     setForm({
       sede: "",
       activo: "",
@@ -69,28 +96,66 @@ export default function Activos() {
       modelo: "",
       procesador: "",
       ram: "",
-      tipo: "",
       hdd: "",
-      tipoHdd: "",
       os: "",
       estado: "Disponible",
     });
   };
 
-  const handleEdit = (i) => {
-    setForm(activos[i]);
-    setEditIndex(i);
+  const handleEdit = (activo) => {
+    const {
+      id,
+      sede,
+      activo: codigoActivo,
+      serial,
+      nombre,
+      areaPrincipal,
+      areaSecundaria,
+      equipo,
+      marca,
+      modelo,
+      procesador,
+      ram,
+      hdd,
+      os,
+      estado,
+    } = activo;
+    setForm({
+      sede: sede || "",
+      activo: codigoActivo || "",
+      serial: serial || "",
+      nombre: nombre || "",
+      areaPrincipal: areaPrincipal || "",
+      areaSecundaria: areaSecundaria || "",
+      equipo: equipo || "",
+      marca: marca || "",
+      modelo: modelo || "",
+      procesador: procesador || "",
+      ram: ram || "",
+      hdd: hdd || "",
+      os: os || "",
+      estado: estado || "Disponible",
+    });
+    setEditId(id);
   };
 
-  const handleDelete = (i) => {
+  const handleDelete = async (activo) => {
     if (window.confirm("¿Eliminar este activo?")) {
-      setActivos(activos.filter((_, idx) => idx !== i));
+      try {
+        setError("");
+        await api.deleteActivo(activo.id);
+        setActivos((prev) => prev.filter((item) => item.id !== activo.id));
+      } catch (err) {
+        setError(err.message);
+      }
     }
   };
 
   const filteredActivos = activos.filter((a) =>
     Object.values(a).some((v) =>
-      v.toLowerCase().includes(search.toLowerCase())
+      String(v ?? "")
+        .toLowerCase()
+        .includes(search.toLowerCase())
     )
   );
 
@@ -104,6 +169,9 @@ export default function Activos() {
   return (
     <div className="container-activos">
       <h1>📦 Gestión de Activos</h1>
+
+      {loading && <p>Cargando activos...</p>}
+      {error && <p className="error">{error}</p>}
 
       <input
         type="text"
@@ -154,7 +222,7 @@ export default function Activos() {
         </select>
 
         <button type="submit">
-          {editIndex === null ? "Agregar Activo" : "Guardar Cambios"}
+          {editId === null ? "Agregar Activo" : "Guardar Cambios"}
         </button>
       </form>
 
@@ -175,7 +243,7 @@ export default function Activos() {
           </thead>
           <tbody>
             {filteredActivos.map((a, i) => (
-              <tr key={i} onClick={() => abrirModal(a)} style={{ cursor: "pointer" }}>
+              <tr key={a.id ?? i} onClick={() => abrirModal(a)} style={{ cursor: "pointer" }}>
                 <td>{a.activo}</td>
                 <td>{a.equipo}</td>
                 <td>{a.marca}</td>
@@ -185,8 +253,8 @@ export default function Activos() {
                 <td>{a.os}</td>
                 <td>{a.estado}</td>
                 <td>
-                  <button onClick={(e) => { e.stopPropagation(); handleEdit(i); }}>✏️</button>
-                  <button onClick={(e) => { e.stopPropagation(); handleDelete(i); }}>🗑️</button>
+                  <button onClick={(e) => { e.stopPropagation(); handleEdit(a); }}>✏️</button>
+                  <button onClick={(e) => { e.stopPropagation(); handleDelete(a); }}>🗑️</button>
                 </td>
               </tr>
             ))}

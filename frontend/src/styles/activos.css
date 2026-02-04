@@ -11,6 +11,14 @@
   gap: 20px;
 }
 
+.container-activos .error {
+  background: #ffe5e5;
+  color: #b42318;
+  border: 1px solid #f5b5b5;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
 /* BUSCADOR */
 .search-input {
   width: 100%;
