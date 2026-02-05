@@ -200,3 +200,343 @@
     min-width: 100%;
   }
 }
+/* Estilos para mensajes */
+.alert {
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.alert-error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+/* Estilos para estados */
+.estado-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.estado-disponible {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.estado-mantenimiento {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.estado-fuera-de-servicio {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Botón cancelar en formulario */
+.btn-cancelar {
+  background-color: #95a5a6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn-cancelar:hover:not(:disabled) {
+  background-color: #7f8c8d;
+}
+
+/* Mejoras para tabla */
+.tabla-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.no-data, .loading, .no-mantenimientos {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Mejoras para el modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+}
+
+.modal-header {
+  background: #0b2a6f;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.modal-info {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.info-value {
+  color: #555;
+  font-size: 15px;
+}
+
+.tabla-historico {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.tabla-historico th {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+.tabla-historico td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-historico tr:hover {
+  background-color: #f5f5f5;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modal-actions {
+  padding: 15px 20px;
+  background: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-pdf {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  flex: 1;
+}
+
+.btn-pdf:hover:not(:disabled) {
+  background: #c0392b;
+}
+
+.btn-cerrar {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  flex: 1;
+}
+
+.btn-cerrar:hover:not(:disabled) {
+  background: #7f8c8d;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-box {
+    width: 95%;
+    max-height: 85vh;
+  }
+  
+  .modal-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-activo {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+}/* Estilos para los checkboxes de sede */
+.sede-checkbox-container {
+  margin-bottom: 15px;
+}
+
+.sede-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.sede-options {
+  display: flex;
+  gap: 20px;
+}
+
+.sede-option {
+  display: flex;
+  align-items: center;
+}
+
+.sede-radio {
+  display: none;
+}
+
+.sede-checkbox-label {
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.sede-checkbox-label:hover {
+  background-color: #e9ecef;
+  border-color: #007bff;
+}
+
+.sede-checkbox-label.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.sede-error {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Badges para sede en la tabla */
+.sede-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sede-niquia {
+  background-color: #e7f5ff;
+  color: #0c63e4;
+  border: 1px solid #0c63e4;
+}
+
+.sede-autopista {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #856404;
+}

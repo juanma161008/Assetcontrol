@@ -1,4 +1,4 @@
-/* CONTENEDOR */
+/* ===== CONTENEDOR PRINCIPAL ===== */
 .container-mantenimiento {
   max-width: 100%;
   margin: auto;
@@ -11,80 +11,427 @@
   gap: 20px;
 }
 
-.container-mantenimiento .error {
-  background: #ffe5e5;
-  color: #b42318;
-  border: 1px solid #f5b5b5;
-  padding: 10px 14px;
+/* ===== INFO DE CONEXIÓN ===== */
+.connection-info {
+  background: #f8f9fa;
+  padding: 8px 12px;
   border-radius: 8px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
-/* BUSCADOR */
+/* ===== BUSCADOR ===== */
 .search-input {
   width: 100%;
   padding: 0.7rem;
   border-radius: 10px;
   border: 1px solid #ccc;
+  margin-bottom: 15px;
 }
 
-/* FORM FLEX */
+/* ===== FORMULARIO FLEX ===== */
 .form-mantenimiento {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
 }
 
 .form-mantenimiento input,
 .form-mantenimiento select {
-  flex: 1 1 220px;
-  padding: 8px;
+  flex: 1 1 220px;   /* 👈 clave para responsive */
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .form-mantenimiento button {
-  flex: 1 1 220px;
-  padding: 10px;
+  flex: 1 1 200px;
+  padding: 12px;
   background: #4f46e5;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.form-mantenimiento button:hover:not(:disabled) {
+  background: #3730a3;
+}
+
+.form-mantenimiento button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* ===== TABLA RESPONSIVE ===== */
-.tabla-container {
+.table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto;       /* 👈 scroll horizontal */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 20px;
 }
 
 .tabla-mantenimiento {
   width: 100%;
-  min-width: 1400px;   /* 👈 muchas columnas */
+  min-width: 1000px;      /* 👈 NO se rompe */
   border-collapse: collapse;
+  background: white;
 }
 
-.tabla-mantenimiento th,
-.tabla-mantenimiento td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  white-space: nowrap;
-  text-align: center;
+.tabla-mantenimiento thead {
+  background: #343a40;
+  color: white;
 }
 
 .tabla-mantenimiento th {
-  background: #f0f0f0;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;    /* 👈 evita que se rompa el texto */
 }
 
-/* BOTONES */
+.tabla-mantenimiento td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tabla-mantenimiento tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* BOTONES EN TABLA */
 .tabla-mantenimiento button {
   margin: 0 4px;
-  padding: 4px 8px;
-  border: none;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
 }
 
-/* MOBILE */
+.tabla-mantenimiento button:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.tabla-mantenimiento button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== BADGES ===== */
+.tipo-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tipo-preventivo {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.tipo-correctivo {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ===== CELDAS ESPECIALES ===== */
+.descripcion-cell {
+  max-width: 300px;
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.actions-cell {
+  text-align: center;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  background: #0b2a6f;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.modal-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.info-row.full-width {
+  grid-column: 1 / -1;
+}
+
+/* ===== BOTONES DE FACTURA Y MODAL ===== */
+.modal-footer {
+  padding: 15px 20px;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Botón de factura */
+.btn-factura {
+  width: 100%;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.btn-factura:hover:not(:disabled) {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-factura:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botones de acciones del modal */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-actualizar {
+  flex: 1;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-eliminar {
+  flex: 1;
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-cancelar {
+  flex: 1;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-actualizar:hover:not(:disabled),
+.btn-eliminar:hover:not(:disabled),
+.btn-cancelar:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-actualizar:disabled,
+.btn-eliminar:disabled,
+.btn-cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== MENSAJES ===== */
+.alert {
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.alert-error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+/* ===== ESTADOS ===== */
+.no-data,
+.loading,
+.no-mantenimientos {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+.loading {
+  color: #4f46e5;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .container-mantenimiento {
     padding: 1rem;
@@ -95,34 +442,257 @@
   .form-mantenimiento button {
     flex: 1 1 100%;
   }
-}
-.factura {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-box {
-  background: #fff;
-  width: 90%;
-  max-width: 900px;
-  padding: 20px;
-}
-
-@media print {
-  body * {
-    visibility: hidden;
+  .modal-content {
+    width: 95%;
+    max-height: 85vh;
+    margin: 10px;
   }
-  #print-area, #print-area * {
-    visibility: visible;
+
+  .modal-info {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-factura,
+  .btn-actualizar,
+  .btn-eliminar,
+  .btn-cancelar {
+    min-width: 100%;
+  }
+  
+  .tabla-mantenimiento {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .tabla-mantenimiento {
+    min-width: 700px;
+  }
+  
+  .modal-info {
+    gap: 10px;
+  }
+  
+  .info-row {
+    gap: 3px;
+  }
+}
+
+/* ===== SCROLL PERSONALIZADO ===== */
+.table-container::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track,
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb,
+.modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover,
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* ===== ESTILOS ADICIONALES ===== */
+
+/* Efecto hover para filas de tabla */
+.tabla-mantenimiento tbody tr {
+  transition: background-color 0.2s;
+}
+
+.tabla-mantenimiento tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilos para inputs y textareas en modal */
+.modal-input[type="text"],
+.modal-input[type="date"],
+.modal-input[type="email"],
+.modal-input[type="password"] {
+  width: 100%;
+}
+
+textarea.modal-input {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* Estilos para selects en modal */
+select.modal-input {
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Estilos para botones deshabilitados */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+
+/* Espaciado entre elementos del formulario */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Mejora visual para etiquetas */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Estilos para tablas responsivas dentro del modal */
+.table-responsive {
+  overflow-x: auto;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Estilos para el botón PDF (si lo usas) */
+.btn-pdf {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.btn-pdf:hover:not(:disabled) {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+.btn-pdf:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estilos para el botón cerrar (si lo usas) */
+.btn-cerrar {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-cerrar:hover:not(:disabled) {
+  background: #7f8c8d;
+}
+
+/* Estilos para los checkboxes (si los usas) */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: auto;
+}
+
+/* Estilos para badges de estado (si los usas) */
+.estado-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.estado-disponible {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.estado-mantenimiento {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.estado-fuera-de-servicio {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Estilos para grupos de formulario en línea */
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .container-mantenimiento {
+    padding: 10px;
+  }
+  
+  .form-mantenimiento {
+    padding: 15px;
+  }
+  
+  .modal-content {
+    width: 100%;
+    margin: 5px;
+    border-radius: 10px;
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 15px;
   }
 }
