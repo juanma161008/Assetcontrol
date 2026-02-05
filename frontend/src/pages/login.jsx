@@ -3,7 +3,6 @@ import logoAsset from "../assets/logo-assetcontrol.png";
 import logoM5 from "../assets/logom5.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 // Importar configuración
 import { API_BASE_URL } from "../config";
